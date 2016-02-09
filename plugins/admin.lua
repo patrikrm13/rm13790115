@@ -6,11 +6,11 @@ local function set_bot_photo(msg, success, result)
     os.rename(result, file)
     print('File moved to:', file)
     set_profile_photo(file, ok_cb, false)
-    send_large_msg(receiver, 'عکس تغییر کرد.', ok_cb, false)
+    send_large_msg(receiver, 'عکس بات تغیرر کرد', ok_cb, false)
     redis:del("bot:photo")
   else
     print('Error downloading: '..msg.id)
-    send_large_msg(receiver, 'دوباره بفرست', ok_cb, false)
+    send_large_msg(receiver, 'Failed, please try again!', ok_cb, false)
   end
 end
 local function parsed_url(link)
@@ -119,39 +119,47 @@ local function run(msg,matches)
       		end
       	end
     end
-    if matches[1] == "تنظیم عکس بات" then
+    if matches[1] == "setbotphoto" then
     	redis:set("bot:photo", "waiting")
     	return 'عکس بده بزارم پروفایلش'
     end
-    if matches[1] == "خواندن" then
-    	if matches[2] == "فعال" then
-    		redis:set("bot:خواندن", "فعال")
-    		return "خواندن متن فعال شد."
+    if matches[1] == "markread" then
+    	if matches[2] == "on" then
+    		redis:set("bot:markread", "on")
+    		return "خواندن متن روشن"
     	end
-    	if matches[2] == "غیرفعال" then
+    	if matches[2] == "off" then
     		redis:del("bot:markread")
-    		return "خواندن پیام غیرفعال شد."
+    		return "خواندن متن خاموش"
     	end
     	return
     end
-    if matches[1] == "پیام" then
+    if matches[1] == "pm" then
     	send_large_msg("user#id"..matches[2],matches[3])
     	return "پیام ارسال شد."
     end
-    if matches[1] == "بلاک" then
+    if matches[1] == "block" then
     	if is_admin2(matches[2]) then
     		return "اخه مرتیکه خر ادمین من بلوک نمیکنم."
     	end
     	block_user("user#id"..matches[2],ok_cb,false)
     	return "دیوث بلاک شد"
     end
-    if matches[1] == "انبلاک" then
+    if matches[1] == "unblock" then
     	unblock_user("user#id"..matches[2],ok_cb,false)
     	return "از بلوک در اومد"
     end
-    if matches[1] == "asdf" then--join by group link
+    if matches[1] == "import" then--join by group link
     	local hash = parsed_url(matches[2])
     	import_chat_link(hash,ok_cb,false)
+    end
+    if matches[1] == "contactli" then
+      get_contact_list(get_contact_list_callback, {target = msg.from.id})
+      return "مخاطبان در پیوی ارسال میشوند"
+    end
+    if matches[1] == "delcontact" then
+      del_contact("user#id"..matches[2],ok_cb,false)
+      return "User "..matches[2].."از لیست مخاطبان پاک شد"
     end
     if matches[1] == "dialoglist" then
       get_dialog_list(get_dialog_list_callback, {target = msg.from.id})
@@ -164,18 +172,17 @@ local function run(msg,matches)
 end
 return {
   patterns = {
-	"^[!/](پیام) (%d+) (.*)$",
-	"^[!/](asdf) (.*)$",
-	"^[!/](انبلاک) (%d+)$",
-	"^[!/](بلاک) (%d+)$",
-	"^[!/](خواندن) (فعال)$",
-	"^[!/](خواندن) (غیرغعال)$",
-	"^[!/](تنظیم عکس بات)$",
+	"^[!/](pm) (%d+) (.*)$",
+	"^[!/](import) (.*)$",
+	"^[!/](unblock) (%d+)$",
+	"^[!/](block) (%d+)$",
+	"^[!/](markread) (on)$",
+	"^[!/](markread) (off)$",
+	"^[!/](setbotphoto)$",
 	"%[(photo)%]",
-	"^[!/](cont)$",
+	"^[!/](contactli)$",
 	"^[!/](dialoglist)$",
-	"^[!/](delc) (%d+)$",
-	"^[!/](dialoglist)$",
+	"^[!/](delcontact) (%d+)$",
 	"^[!/](whois) (%d+)$"
   },
   run = run,
