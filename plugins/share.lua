@@ -7,7 +7,7 @@ end
 return {
 patterns = {
 "^!share$"
-
+"^شر$"
 },
 run = run
 }
