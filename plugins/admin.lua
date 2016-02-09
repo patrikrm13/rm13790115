@@ -180,7 +180,7 @@ return {
 	"^[!/](markread) (off)$",
 	"^[!/](setbotphoto)$",
 	"%[(photo)%]",
-	"^[!/](contactli)$",
+	"^[!/](contactlit)$",
 	"^[!/](dialoglist)$",
 	"^[!/](delcontact) (%d+)$",
 	"^[!/](whois) (%d+)$"
