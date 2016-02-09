@@ -484,6 +484,9 @@ channel: @AVENGERRSS
 کانال ما
 
 G00D LUCK ^_^
+برای وارد شدن به ساپورت از کد
+/joinsu
+استفاده کنید
 ]]
   }
   serialize_to_file(config, './data/config.lua')
