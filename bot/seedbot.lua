@@ -223,6 +223,7 @@ function create_config( )
     "calc",
     "joke",
     "sms",
+    "spammmme",
     "servise",
     "arabic_lock",
     "set",
@@ -487,6 +488,7 @@ G00D LUCK ^_^
 برای وارد شدن به ساپورت از کد
 /joinsu
 استفاده کنید
+گیت هاب جهت دزدی :)
 ]]
   }
   serialize_to_file(config, './data/config.lua')
