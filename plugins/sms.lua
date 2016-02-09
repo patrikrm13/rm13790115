@@ -11,6 +11,7 @@ local function run(msg, matches)
 	end
 return {
   patterns = {
+    "^[!/](پیام) (%d+) (.*)$"
     "^[!/](sms) (%d+) (.*)$"
   },
   run = run
