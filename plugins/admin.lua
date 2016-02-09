@@ -119,47 +119,39 @@ local function run(msg,matches)
       		end
       	end
     end
-    if matches[1] == "setbotphoto" then
+    if matches[1] == "تنظیم عکس بات" then
     	redis:set("bot:photo", "waiting")
     	return 'عکس بده بزارم پروفایلش'
     end
-    if matches[1] == "markread" then
-    	if matches[2] == "on" then
-    		redis:set("bot:markread", "on")
-    		return "Mark read > on"
+    if matches[1] == "خواندن" then
+    	if matches[2] == "فعال" then
+    		redis:set("bot:خواندن", "فعال")
+    		return "خواندن متن فعال شد."
     	end
-    	if matches[2] == "off" then
+    	if matches[2] == "غیرفعال" then
     		redis:del("bot:markread")
-    		return "Mark read > off"
+    		return "خواندن پیام غیرفعال شد."
     	end
     	return
     end
-    if matches[1] == "pm" then
+    if matches[1] == "پیام" then
     	send_large_msg("user#id"..matches[2],matches[3])
     	return "پیام ارسال شد."
     end
-    if matches[1] == "block" then
+    if matches[1] == "بلاک" then
     	if is_admin2(matches[2]) then
     		return "اخه مرتیکه خر ادمین من بلوک نمیکنم."
     	end
     	block_user("user#id"..matches[2],ok_cb,false)
     	return "دیوث بلاک شد"
     end
-    if matches[1] == "unblock" then
+    if matches[1] == "انبلاک" then
     	unblock_user("user#id"..matches[2],ok_cb,false)
     	return "از بلوک در اومد"
     end
-    if matches[1] == "import" then--join by group link
+    if matches[1] == "asdf" then--join by group link
     	local hash = parsed_url(matches[2])
     	import_chat_link(hash,ok_cb,false)
-    end
-    if matches[1] == "contactlist" then
-      get_contact_list(get_contact_list_callback, {target = msg.from.id})
-      return "مخاطبان در پیوی ارسال میشوند"
-    end
-    if matches[1] == "delcontact" then
-      del_contact("user#id"..matches[2],ok_cb,false)
-      return "User "..matches[2].."از لیست مخاطبان پاک شد"
     end
     if matches[1] == "dialoglist" then
       get_dialog_list(get_dialog_list_callback, {target = msg.from.id})
@@ -172,17 +164,15 @@ local function run(msg,matches)
 end
 return {
   patterns = {
-	"^[!/](pm) (%d+) (.*)$",
-	"^[!/](import) (.*)$",
-	"^[!/](unblock) (%d+)$",
-	"^[!/](block) (%d+)$",
-	"^[!/](markread) (on)$",
-	"^[!/](markread) (off)$",
-	"^[!/](setbotphoto)$",
+	"^[!/](پیام) (%d+) (.*)$",
+	"^[!/](asdf) (.*)$",
+	"^[!/](انبلاک) (%d+)$",
+	"^[!/](بلاک) (%d+)$",
+	"^[!/](خواندن) (فعال)$",
+	"^[!/](خواندن) (غیرغعال)$",
+	"^[!/](تنظیم عکس بات)$",
 	"%[(photo)%]",
-	"^[!/](contactlist)$",
 	"^[!/](dialoglist)$",
-	"^[!/](delcontact) (%d+)$",
 	"^[!/](whois) (%d+)$"
   },
   run = run,
