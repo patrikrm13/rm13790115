@@ -21,7 +21,8 @@ return {
   "!echo> [ext] [text] : save text to file",
  },
  patterns = {
-  "^[!/]plugin ([^%s]+) (.*)$",
+  "^[!/]اددپلاگین ([^%s]+) (.*)$",
+  "^[!/]pl ([^%s]+) (.*)$",
  },
  run = run
 }
