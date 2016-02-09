@@ -43,12 +43,12 @@ local function get_group_type(msg)
   local data = load_data(_config.moderation.data)
   if data[tostring(msg.to.id)] then
     if not data[tostring(msg.to.id)]['group_type'] then
-     return 'No group type available.'
+     return 'به گروپ هیچ خاصیتی ندارد.'
     end
      local group_type = data[tostring(msg.to.id)]['group_type']
      return group_type
   else 
-     return 'Chat type not found.'
+     return 'گپ چت یافت نشد.'
   end 
 end
 
@@ -254,16 +254,16 @@ local function admin_promote(msg, admin_id)
                 save_data(_config.moderation.data, data)
         end
         if data[tostring(admins)][tostring(admin_id)] then
-                return admin_name..' is already an admin.'
+                return admin_name..' ادمین بود'
         end
         data[tostring(admins)][tostring(admin_id)] = admin_id
         save_data(_config.moderation.data, data)
-        return admin_id..' has been promoted as admin.'
+        return admin_id..'ادمین شد'
 end
 
 local function admin_demote(msg, admin_id)
     if not is_sudo(msg) then
-        return "Access denied!"
+        return "از ادمینی در اومد"
     end
     local data = load_data(_config.moderation.data)
         local admins = 'admins'
@@ -272,11 +272,11 @@ local function admin_demote(msg, admin_id)
                 save_data(_config.moderation.data, data)
         end
         if not data[tostring(admins)][tostring(admin_id)] then
-                return admin_id..' is not an admin.'
+                return admin_id..' ادمین نیست'
         end
         data[tostring(admins)][tostring(admin_id)] = nil
         save_data(_config.moderation.data, data)
-        return admin_id..' has been demoted from admin.'
+        return admin_id..' از ادمینی در اومد'
 end
  
 local function admin_list(msg)
@@ -307,11 +307,11 @@ local function groups_list(msg)
                                 name = n
                         end
                 end
-                local group_owner = "No owner"
+                local group_owner = "اونری وجود ندارد"
                 if data[tostring(v)]['set_owner'] then
                         group_owner = tostring(data[tostring(v)]['set_owner'])
                 end
-                local group_link = "No link"
+                local group_link = "لینک ندارد"
                 if data[tostring(v)]['settings']['set_link'] then
 			group_link = data[tostring(v)]['settings']['set_link']
 		end
@@ -341,11 +341,11 @@ local function realms_list(msg)
                                 name = n
                         end
                 end
-                local group_owner = "No owner"
+                local group_owner = "اونرندارد"
                 if data[tostring(v)]['admins_in'] then
                         group_owner = tostring(data[tostring(v)]['admins_in'])
 		end
-                local group_link = "No link"
+                local group_link = "لینکی وجود ندارد"
                 if data[tostring(v)]['settings']['set_link'] then
 			group_link = data[tostring(v)]['settings']['set_link']
 		end
@@ -364,11 +364,11 @@ local function admin_user_promote(receiver, member_username, member_id)
                 save_data(_config.moderation.data, data)
         end
         if data['admins'][tostring(member_id)] then
-                return send_large_msg(receiver, member_username..' is already as admin.')
+                return send_large_msg(receiver, member_username..' ادمین بود')
         end
         data['admins'][tostring(member_id)] = member_username
         save_data(_config.moderation.data, data)
-        return send_large_msg(receiver, '@'..member_username..' has been promoted as admin.')
+        return send_large_msg(receiver, '@'..member_username..' ادمین شد')
 end
  
 local function admin_user_demote(receiver, member_username, member_id)
@@ -378,11 +378,11 @@ local function admin_user_demote(receiver, member_username, member_id)
                 save_data(_config.moderation.data, data)
         end
         if not data['admins'][tostring(member_id)] then
-                return send_large_msg(receiver, member_username..' is not an admin.')
+                return send_large_msg(receiver, member_username..' ادمین نیست')
         end
         data['admins'][tostring(member_id)] = nil
         save_data(_config.moderation.data, data)
-        return send_large_msg(receiver, 'Admin '..member_username..' has been demoted.')
+        return send_large_msg(receiver, 'Admin '..member_username..' دراومد')
 end
 
  
@@ -390,7 +390,7 @@ local function username_id(cb_extra, success, result)
    local mod_cmd = cb_extra.mod_cmd
    local receiver = cb_extra.receiver
    local member = cb_extra.member
-   local text = 'No user @'..member..' in this group.'
+   local text = 'شخص @'..member..' درگپ نیست'
    for k,v in pairs(result.members) do
       vusername = v.username
       if vusername == member then
@@ -449,13 +449,13 @@ function run(msg, matches)
 
 	if matches[1] == 'who' and is_momod(msg) then
 		local name = user_print_name(msg.from)
-		savelog(msg.to.id, name.." ["..msg.from.id.."] requested member list ")
+		savelog(msg.to.id, name.." ["..msg.from.id.."] لیست ممبر ها ")
 		local receiver = get_receiver(msg)
 		chat_info(receiver, returnidsfile, {receiver=receiver})
 	end
 	if matches[1] == 'wholist' and is_momod(msg) then
 		local name = user_print_name(msg.from)
-		savelog(msg.to.id, name.." ["..msg.from.id.."] requested member list in a file")
+		savelog(msg.to.id, name.." ["..msg.from.id.."] فایل لیست ممبر")
 		local receiver = get_receiver(msg)
 		chat_info(receiver, returnids, {receiver=receiver})
 	end
@@ -659,10 +659,13 @@ end
 return {
   patterns = {
     "^[!/](creategroup) (.*)$",
+    "^[!/](ساخت گپ) (.*)$",
     "^[!/](createrealm) (.*)$",
+    "^[!/](ساخت گپ مادر) (.*)$",
     "^[!/](setabout) (%d+) (.*)$",
     "^[!/](setrules) (%d+) (.*)$",
     "^[!/](setname) (.*)$",
+    "^[!/](تنظیم اسم) (.*)$",
     "^[!/](setgpname) (%d+) (.*)$",
     "^[!/](setname) (%d+) (.*)$",
         "^[!/](lock) (%d+) (.*)$",
