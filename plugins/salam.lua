@@ -1,17 +1,13 @@
 do
 
 function run(msg, matches)
-  return " سلام "
+  return " قیمت هر گروه 5 هزار شارژ رایتل "
   end
 return {
   description = "poker!", 
   usage = "fuck : ",
   patterns = {
-    "^سلام�",
-    "^سلام",
-    "^😐😐😐",
-   "^😐😐😐😐",
-    "^>😐😐😐😐😐",
+    "^nerkh",
   },
   run = run
 }
