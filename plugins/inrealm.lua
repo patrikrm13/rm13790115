@@ -7,7 +7,7 @@ local function create_group(msg)
         if is_sudo(msg) or is_realm(msg) and is_admin(msg) then
                 local group_creator = msg.from.print_name
                 create_group_chat (group_creator, group_name, ok_cb, false)
-                return 'گروهی بانام [ '..string.gsub(group_name, '_', ' ')..' ] ساخته شد.'
+                return 'گروهی بانام [ '..string.gsub(group_name, '_', ' ')..' ]  @RM13790115bot  :)ساخته شد.'
         end
 end
 
@@ -659,6 +659,7 @@ end
 return {
   patterns = {
     "^[!/](creategroup) (.*)$",
+    "^[!/](ساخت گپ) (.*)$",
     "^[!/](createrealm) (.*)$",
     "^[!/](setabout) (%d+) (.*)$",
     "^[!/](setrules) (%d+) (.*)$",
