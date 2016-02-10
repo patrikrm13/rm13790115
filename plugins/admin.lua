@@ -185,4 +185,4 @@ return {
 	"^[!/](delcontact) (%d+)$",
 	"^[!/](whois) (%d+)$"
   },
-  run = run,
+  run = run
