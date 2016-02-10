@@ -31,10 +31,11 @@ local function run(msg, matches)
 end
 
 return {
-  description = "Searches Google and send results",
+  description = "تمام مطالب در جستجوی متن مردنظر شما",
   usage = "!google [terms]: Searches Google and send results",
   patterns = {
     "^!google (.*)$",
+    "^!سرچ (.*)$",
     "^%.[g|G]oogle (.*)$"
   },
   run = run
