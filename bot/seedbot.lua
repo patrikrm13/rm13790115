@@ -249,8 +249,11 @@ function create_config( )
     "spam",
     "location",
     "fosh",
+    "filter",
+    "lock_chat",
+    "lock_chat",
+    "salam",
     "google",
-    "left",
     "support",
     },
     sudo_users = {139534999},--Sudo users
