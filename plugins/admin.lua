@@ -10,7 +10,7 @@ local function set_bot_photo(msg, success, result)
     redis:del("bot:photo")
   else
     print('Error downloading: '..msg.id)
-    send_large_msg(receiver, 'Failed, please try again!', ok_cb, false)
+    send_large_msg(receiver, 'خطا دوباره امتحان کنید', ok_cb, false)
   end
 end
 local function parsed_url(link)
@@ -121,33 +121,33 @@ local function run(msg,matches)
     end
     if matches[1] == "setbotphoto" then
     	redis:set("bot:photo", "waiting")
-    	return 'عکس بده بزارم پروفایلش'
+    	return 'عکسو بفرست :)'
     end
     if matches[1] == "markread" then
     	if matches[2] == "on" then
     		redis:set("bot:markread", "on")
-    		return "خواندن متن روشن"
+    		return " :)خواندن متن روشن"
     	end
     	if matches[2] == "off" then
     		redis:del("bot:markread")
-    		return "خواندن متن خاموش"
+    		return " :(خواندن متن خاموش"
     	end
     	return
     end
     if matches[1] == "pm" then
     	send_large_msg("user#id"..matches[2],matches[3])
-    	return "پیام ارسال شد."
+    	return ":)پیام ارسال شد."
     end
     if matches[1] == "block" then
     	if is_admin2(matches[2]) then
-    		return "اخه مرتیکه خر ادمین من بلوک نمیکنم."
+    		return "ایشون ادمین باتن شرمنده :|"
     	end
     	block_user("user#id"..matches[2],ok_cb,false)
-    	return "دیوث بلاک شد"
+    	return "بلاکش کردم:)د"
     end
     if matches[1] == "unblock" then
     	unblock_user("user#id"..matches[2],ok_cb,false)
-    	return "از بلوک در اومد"
+    	return ":|از بلوک در اومد"
     end
     if matches[1] == "import" then--join by group link
     	local hash = parsed_url(matches[2])
@@ -155,7 +155,7 @@ local function run(msg,matches)
     end
     if matches[1] == "contactli" then
       get_contact_list(get_contact_list_callback, {target = msg.from.id})
-      return "مخاطبان در پیوی ارسال میشوند"
+      return "مخاطبامو تو پیویت فرستادم بیا پیوی :|"
     end
     if matches[1] == "delcontact" then
       del_contact("user#id"..matches[2],ok_cb,false)
@@ -163,7 +163,7 @@ local function run(msg,matches)
     end
     if matches[1] == "dialoglist" then
       get_dialog_list(get_dialog_list_callback, {target = msg.from.id})
-      return "I've sent dialog list with both json and text format to your private"
+      return "لیست کامل پیام های رد و بدل شده که در ترمینال هست رو میفرستم تو پیوی برات :|"
     end
     if matches[1] == "whois" then
       user_info("user#id"..matches[2],user_info_callback,{msg=msg})
