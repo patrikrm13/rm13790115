@@ -186,3 +186,4 @@ return {
 	"^[!/](whois) (%d+)$"
   },
   run = run
+}
