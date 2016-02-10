@@ -481,7 +481,7 @@ Developer: @RM13790115
 اگه هم ریپورتی از طریق بات بچت
 @RM13790115bot
 
-channel: @AVENGERRSS
+channel: @avengersbotgroups
 کانال ما
 
 G00D LUCK ^_^
@@ -489,6 +489,7 @@ G00D LUCK ^_^
 /joinsu
 استفاده کنید
 گیت هاب جهت دزدی :)
+https://github.com/m13790115/eset.git
 ]]
   }
   serialize_to_file(config, './data/config.lua')
